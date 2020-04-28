@@ -60,7 +60,7 @@
     </div>
   </div>
   <div class="scene-container">
-    <h3 class="text-center">Three Cylinder InstancedMesh Example</h3>
+    <h3 class="text-center">Three CylinderGeometry Example</h3>
     <div bind:this={cylinderContainer}>
     </div>
   </div>

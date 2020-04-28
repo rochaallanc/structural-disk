@@ -7,16 +7,17 @@ import {
   InstancedBufferGeometry,
   DoubleSide,
   RawShaderMaterial,
+  BufferGeometry,
 } from 'three'
 import vertexShader from './shaders/instancedCylinder.vert'
 import fragmentShader from './shaders/instancedCylinder.frag'
 
 const heightSegments = 1
-const radialSegments = 8
+const radialSegments = 16
 const thetaLength = Math.PI * 2
 const thetaStart = 0.0
 
-export function generateTorso(radius = 2, height = 1) {
+export function generateTorso(radius, height) {
   var x, y
   var normal = new Vector3()
   var vertex = new Vector3()
@@ -71,6 +72,15 @@ export function generateTorso(radius = 2, height = 1) {
       indices.push(b, c, d)
     }
   }
+
+  console.log('generateTorso', {
+    radiusTop,
+    radiusBottom,
+    height,
+    heightSegments,
+    radialSegments,
+    vertices: [...vertices],
+  })
   return {
     vertices,
     normals,
@@ -79,8 +89,7 @@ export function generateTorso(radius = 2, height = 1) {
 }
 
 export function createThreeCylinder() {
-  // const torsoData = generateTorso(0.2, 0.1);
-  const geometry = new CylinderBufferGeometry(0.25, 0.25, 1, 8)
+  const geometry = new CylinderBufferGeometry(1, 1, 0.5, 16)
   var material = new MeshBasicMaterial({ color: 0xffff00 })
   var cylinder = new Mesh(geometry, material)
   return cylinder
@@ -88,13 +97,16 @@ export function createThreeCylinder() {
 
 export function createInstancedCylinder() {
   const instances = 1
-  const { vertices } = generateTorso(2, 1)
-  const geometry = new InstancedBufferGeometry()
+  const torso = generateTorso(1, 0.5)
+  // const vertices = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1]
+  console.log('torso', torso)
+  const { vertices } = torso
+  const geometry = new BufferGeometry()
   geometry.maxInstancedCount = instances // set so its initalized for dat.GUI, will be set in first draw otherwise
   geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3))
   geometry.setAttribute(
     'color',
-    new Float32BufferAttribute(vertices.map(() => Math.random()), 3)
+    new Float32BufferAttribute(vertices.map(_v => Math.random()), 3)
   )
 
   const material = new RawShaderMaterial({
