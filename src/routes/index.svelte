@@ -12,10 +12,7 @@
 	}
 
 	.scene-container {
-		margin: 0 0 1em 0;
-    width: 800px;
-    height: 800px;
-    border: grey 1px solid;
+    display: inline-block;
 	}
 
 	img {
@@ -39,16 +36,12 @@
   import {onMount} from 'svelte';
   import {Color,Vector4, Scene, PerspectiveCamera, RawShaderMaterial, InstancedBufferGeometry, Float32BufferAttribute, InstancedBufferAttribute, DoubleSide, Mesh, WebGLRenderer} from 'three';
   import {vertexShader, fragmentShader} from '../setup/instancedMesh';
-
     var container;
-
-    var camera, scene, renderer;
-
-
-    function init() {
-      camera = new PerspectiveCamera( 50, 1, 1, 10 );
+    function createScene({width=400, height=400}) {
+      const camera = new PerspectiveCamera( 50, 1, 1, 10 );
       camera.position.z = 2;
-      scene = new Scene();
+      const scene = new Scene();
+      const renderer = new WebGLRenderer();
       // geometry
       var vector = new Vector4();
       var instances = 100;
@@ -100,9 +93,8 @@
 
       var mesh = new Mesh( geometry, material );
       scene.add( mesh );
-      renderer = new WebGLRenderer();
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(800,800);
+      renderer.setSize(width,height);
       renderer.setClearColor(new Color(0,0,0), 1)
       console.log(container)
       container.appendChild( renderer.domElement );
@@ -111,31 +103,39 @@
         return;
       }
       window.addEventListener( 'resize', onWindowResize, false );
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+      }
+
+      function animate() {
+        requestAnimationFrame( animate );
+        render();
+      }
+
+      function render() {
+        var time = performance.now();
+        var object = scene.children[ 0 ];
+        object.rotation.y = time * 0.0005;
+        object.material.uniforms[ "time" ].value = time * 0.005;
+        object.material.uniforms[ "sineTime" ].value = Math.sin( object.material.uniforms[ "time" ].value * 0.05 );
+        renderer.render( scene, camera );
+      }
+      return {
+        render,
+        animate,
+        onDestroy() {
+          window.removeEventListener('resize', onWindowResize)
+        }
+      }
     }
 
-    function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize( window.innerWidth, window.innerHeight );
-    }
 
-    function animate() {
-      requestAnimationFrame( animate );
-      render();
-    }
-
-    function render() {
-      var time = performance.now();
-      var object = scene.children[ 0 ];
-      object.rotation.y = time * 0.0005;
-      object.material.uniforms[ "time" ].value = time * 0.005;
-      object.material.uniforms[ "sineTime" ].value = Math.sin( object.material.uniforms[ "time" ].value * 0.05 );
-      renderer.render( scene, camera );
-    }
 
     onMount(() => {
-      init();
-      animate();
+      const {animate} = createScene({});
+      animate()
     })
 </script>
 
