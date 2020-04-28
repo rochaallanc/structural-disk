@@ -1,4 +1,4 @@
 export {
   createThreeInstancedMeshRenderingInstances,
 } from './threeInstancedExample'
-export { createCylinder } from './cylinder'
+export { createThreeCylinder, createInstancedCylinder } from './cylinder'
