@@ -1,4 +1,13 @@
-import { Mesh, Vector3, CylinderBufferGeometry, MeshBasicMaterial, Float32BufferAttribute, InstancedBufferGeometry, DoubleSide, RawShaderMaterial } from 'three'
+import {
+  Mesh,
+  Vector3,
+  CylinderBufferGeometry,
+  MeshBasicMaterial,
+  Float32BufferAttribute,
+  InstancedBufferGeometry,
+  DoubleSide,
+  RawShaderMaterial,
+} from 'three'
 import vertexShader from './shaders/instancedCylinder.vert'
 import fragmentShader from './shaders/instancedCylinder.frag'
 
@@ -71,7 +80,7 @@ export function generateTorso(radius = 2, height = 1) {
 
 export function createThreeCylinder() {
   // const torsoData = generateTorso(0.2, 0.1);
-  const geometry = new CylinderBufferGeometry(0.5, 0.5, 2, 3.2)
+  const geometry = new CylinderBufferGeometry(0.25, 0.25, 1, 8)
   var material = new MeshBasicMaterial({ color: 0xffff00 })
   var cylinder = new Mesh(geometry, material)
   return cylinder
@@ -79,16 +88,17 @@ export function createThreeCylinder() {
 
 export function createInstancedCylinder() {
   const instances = 1
-  const { vertices } = generateTorso();
+  const { vertices } = generateTorso(2, 1)
   const geometry = new InstancedBufferGeometry()
   geometry.maxInstancedCount = instances // set so its initalized for dat.GUI, will be set in first draw otherwise
   geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3))
+  geometry.setAttribute(
+    'color',
+    new Float32BufferAttribute(vertices.map(() => Math.random()), 3)
+  )
 
   const material = new RawShaderMaterial({
-    uniforms: {
-      time: { value: 1.0 },
-      sineTime: { value: 1.0 },
-    },
+    uniforms: {},
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
     side: DoubleSide,

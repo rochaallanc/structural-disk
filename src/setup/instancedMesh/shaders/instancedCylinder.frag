@@ -1,15 +1,10 @@
 precision highp float;
-
-uniform float time;
-
-varying vec3 vPosition;
+/* uniform float time = 0.0; */
+/* varying vec3 vPosition; */
 varying vec4 vColor;
-
 void main() {
-
   vec4 color = vec4( vColor );
-  color.r += sin( vPosition.x * 10.0 + time ) * 0.5;
-
+  /* color.r += sin( vPosition.x * 10.0 + time ) * 0.5; */
   gl_FragColor = color;
 }
 

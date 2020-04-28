@@ -1,10 +1,12 @@
 import { Color, Scene, PerspectiveCamera, WebGLRenderer } from 'three'
+import { OrbitControls } from './orbitControl'
 
 export function createScene(container, { width = 400, height = 400 }) {
   const camera = new PerspectiveCamera(50, 1, 1, 10)
   camera.position.z = 2
   const scene = new Scene()
   const renderer = new WebGLRenderer()
+  const controls = new OrbitControls(camera, renderer.domElement)
 
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.setSize(width, height)
@@ -29,6 +31,7 @@ export function createScene(container, { width = 400, height = 400 }) {
   let onRender = () => {}
   function render() {
     onRender()
+    controls.update()
     renderer.render(scene, camera)
   }
   return {

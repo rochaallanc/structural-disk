@@ -11,6 +11,7 @@
   .scene-container {
     display: inline-block;
     margin: 0 1rem;
+    width: 450px;
   }
 </style>
 
@@ -19,6 +20,7 @@
   import {createThreeInstancedMeshRenderingInstances, createInstancedCylinder, createThreeCylinder} from '../setup/instancedMesh';
   import {createScene} from '../setup/scene.js'
   var container, cylinderContainer, instancedCylinderContainer;
+
   onMount(() => {
     // three instanced mesh scene
     const scene = createScene(container, {width: 400, height: 400});
@@ -36,12 +38,13 @@
 
     // cylinder minimal
     const cylinderScene = createScene(cylinderContainer, {width: 400, height: 400});
-    cylinderScene.add(createThreeCylinder())
+    const cylinder = createThreeCylinder();
+    cylinderScene.add(cylinder)
     cylinderScene.animate()
 
     // instanced cylinder
     const instancedCylinderScene = createScene(instancedCylinderContainer, {width: 400, height: 400});
-    instancedCylinderScene.add(createThreeCylinder())
+    instancedCylinderScene.add(createInstancedCylinder())
     instancedCylinderScene.animate()
   })
 </script>
