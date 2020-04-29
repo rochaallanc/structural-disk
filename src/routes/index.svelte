@@ -42,12 +42,14 @@
 
     // cylinder minimal
     const cylinderScene = createScene(cylinderContainer);
+    cylinderScene.getCamera().position.fromArray([3, 4, 6])
     const cylinder = createThreeCylinder();
     cylinderScene.add(cylinder)
     cylinderScene.animate()
 
     // instanced cylinder
     const instancedCylinderScene = createScene(instancedCylinderContainer);
+    instancedCylinderScene.getCamera().position.fromArray([5, 6, 13])
     instancedCylinderScene.add(createInstancedCylinder())
     instancedCylinderScene.animate()
   })

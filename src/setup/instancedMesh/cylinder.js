@@ -21,7 +21,7 @@ export function createThreeCylinder() {
 
 export function createInstancedCylinder() {
   const instances = 1
-  const torso = generateCylinder(1, 0.5)
+  const torso = generateCylinder(6, 2)
   // const vertices = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1]
   console.log('torso', torso)
   const { vertices, indices } = torso

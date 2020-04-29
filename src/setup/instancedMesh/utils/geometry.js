@@ -156,6 +156,7 @@ export function generateCylinder(radius, height) {
 
   generateTorso(radius, height)
   generateCap(true)
+  generateCap(false)
 
   return {
     vertices,

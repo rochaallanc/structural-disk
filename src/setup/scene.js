@@ -6,7 +6,7 @@ export function createScene(
   container,
   { width = 400, height = 400 } = { width: 400, height: 400 }
 ) {
-  const camera = new PerspectiveCamera(45, 1, 0.1, 20)
+  const camera = new PerspectiveCamera(45, 1, 0.1, 50)
   camera.position.z = 2
   const scene = new Scene()
   scene.add(new AxesHelper())
@@ -42,6 +42,9 @@ export function createScene(
     renderer.render(scene, camera)
   }
   return {
+    getCamera() {
+      return camera
+    },
     render,
     onRender(cb) {
       onRender = cb
