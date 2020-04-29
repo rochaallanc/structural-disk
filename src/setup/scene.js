@@ -2,7 +2,10 @@ import { Color, Scene, PerspectiveCamera, WebGLRenderer } from 'three'
 import { OrbitControls } from './orbitControl'
 import { AxesHelper } from './axesHelper'
 
-export function createScene(container, { width = 400, height = 400 }) {
+export function createScene(
+  container,
+  { width = 400, height = 400 } = { width: 400, height: 400 }
+) {
   const camera = new PerspectiveCamera(45, 1, 0.1, 20)
   camera.position.z = 2
   const scene = new Scene()

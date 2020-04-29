@@ -27,7 +27,7 @@
 
   onMount(() => {
     // three instanced mesh scene
-    const scene = createScene(container, {width: 400, height: 400});
+    const scene = createScene(container);
     const mesh = createThreeInstancedMeshRenderingInstances();
     scene.add(mesh)
     scene.onRender(() => {
@@ -41,13 +41,13 @@
     scene.animate()
 
     // cylinder minimal
-    const cylinderScene = createScene(cylinderContainer, {width: 400, height: 400});
+    const cylinderScene = createScene(cylinderContainer);
     const cylinder = createThreeCylinder();
     cylinderScene.add(cylinder)
     cylinderScene.animate()
 
     // instanced cylinder
-    const instancedCylinderScene = createScene(instancedCylinderContainer, {width: 400, height: 400});
+    const instancedCylinderScene = createScene(instancedCylinderContainer);
     instancedCylinderScene.add(createInstancedCylinder())
     instancedCylinderScene.animate()
   })
