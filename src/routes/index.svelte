@@ -6,12 +6,16 @@
   .minimals {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
   }
 
-  .scene-container {
+  .minimal-card {
     display: inline-block;
-    margin: 0 1rem;
+    margin: 1rem 1rem;
     width: 450px;
+  }
+  h3 {
+    margin: 0.25rem 0.25rem;
   }
 </style>
 
@@ -54,19 +58,16 @@
 </svelte:head>
 
 <div class="minimals">
-  <div class="scene-container">
-    <h3 class="text-center">Three InstancedMesh Example</h3>
-    <div bind:this={container}>
-    </div>
+  <div class="minimal-card">
+    <div bind:this={container}></div>
+    <h3 class="text-center">Three InstancedMesh</h3>
   </div>
-  <div class="scene-container">
-    <h3 class="text-center">Three CylinderGeometry Example</h3>
-    <div bind:this={cylinderContainer}>
-    </div>
+  <div class="minimal-card">
+    <div bind:this={cylinderContainer}></div>
+    <h3 class="text-center">Three CylinderGeometry</h3>
   </div>
-  <div class="scene-container">
+  <div class="minimal-card">
+    <div bind:this={instancedCylinderContainer}></div>
     <h3 class="text-center">Instanced Cylinder BufferGeometry</h3>
-    <div bind:this={instancedCylinderContainer}>
-    </div>
   </div>
 </div>
