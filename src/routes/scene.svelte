@@ -33,3 +33,7 @@
   <div bind:this={container}></div>
   <h3 class="text-center">Three InstancedMesh</h3>
 </div>
+
+<svelte:head>
+  <title>Scene</title>
+</svelte:head>
