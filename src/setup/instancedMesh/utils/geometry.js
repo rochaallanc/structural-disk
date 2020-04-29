@@ -1,6 +1,6 @@
 import { Vector3, Vector2 } from 'three'
 
-const heightSegments = 1
+const heightSegments = 2
 const radialSegments = 16
 const thetaLength = Math.PI * 2
 const thetaStart = 0.0

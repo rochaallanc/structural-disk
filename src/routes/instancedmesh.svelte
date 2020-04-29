@@ -50,7 +50,15 @@
     // instanced cylinder
     const instancedCylinderScene = createScene(instancedCylinderContainer);
     instancedCylinderScene.getCamera().position.fromArray([5, 6, 13])
-    instancedCylinderScene.add(createInstancedCylinder())
+    const instancedCylinderMesh = createInstancedCylinder();
+    instancedCylinderScene.add(instancedCylinderMesh)
+    instancedCylinderScene.onRender(() => {
+      var time = performance.now()
+      instancedCylinderMesh.rotation.y = time * 0.0005
+      instancedCylinderMesh.material.uniforms['sineTime'].value = Math.sin(
+        time * 0.005
+      )
+    })
     instancedCylinderScene.animate()
   })
 </script>

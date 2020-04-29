@@ -17,6 +17,7 @@ export function createScene(
   renderer.setSize(width, height)
   renderer.setClearColor(new Color(0, 0, 0), 1)
   renderer.domElement.style.display = 'block'
+  renderer.domElement.style.outline = 'none'
   renderer.domElement.style.margin = 'auto'
   container.appendChild(renderer.domElement)
   if (renderer.extensions.get('ANGLE_instanced_arrays') === null) {

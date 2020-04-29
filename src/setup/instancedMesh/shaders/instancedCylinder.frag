@@ -1,6 +1,4 @@
 precision highp float;
-/* uniform float time = 0.0; */
-/* varying vec3 vPosition; */
 varying vec4 vColor;
 void main() {
   vec4 color = vec4(vColor);
