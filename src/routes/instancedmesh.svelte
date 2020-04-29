@@ -8,6 +8,14 @@
     flex-direction: row;
     flex-wrap: wrap;
   }
+  pre {
+    margin: 0;
+  }
+
+  .minimal-ui {
+    text-align: center;
+    padding: 1rem;
+  }
 
   .minimal-card {
     display: inline-block;
@@ -49,17 +57,18 @@
 
     // instanced cylinder
     const instancedCylinderScene = createScene(instancedCylinderContainer);
-    instancedCylinderScene.getCamera().position.fromArray([5, 6, 13])
+    instancedCylinderScene.getCamera().position.fromArray([2, 2, 2])
     const instancedCylinderMesh = createInstancedCylinder();
     instancedCylinderScene.add(instancedCylinderMesh)
     instancedCylinderScene.onRender(() => {
       var time = performance.now()
-      instancedCylinderMesh.rotation.y = time * 0.0005
-      instancedCylinderMesh.material.uniforms['sineTime'].value = Math.sin(
-        time * 0.005
-      )
+      // instancedCylinderMesh.rotation.y = time * 0.0005
+      // instancedCylinderMesh.material.uniforms['sineTime'].value = Math.sin(
+      //   time * 0.005
+      // )
     })
     instancedCylinderScene.animate()
+    window.instancedCylinderScene = instancedCylinderScene
   })
 </script>
 
@@ -72,10 +81,12 @@
     <div bind:this={container}></div>
     <h3 class="text-center">Three InstancedMesh</h3>
   </div>
+
   <div class="minimal-card">
     <div bind:this={cylinderContainer}></div>
     <h3 class="text-center">Three CylinderGeometry</h3>
   </div>
+
   <div class="minimal-card">
     <div bind:this={instancedCylinderContainer}></div>
     <h3 class="text-center">Instanced Cylinder BufferGeometry</h3>

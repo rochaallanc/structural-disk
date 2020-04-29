@@ -1,13 +1,13 @@
 import {
   Mesh,
   CylinderBufferGeometry,
-  MeshBasicMaterial,
   Float32BufferAttribute,
   InstancedBufferGeometry,
   DoubleSide,
   RawShaderMaterial,
   InstancedBufferAttribute,
   Vector4,
+  MeshPhongMaterial,
 } from 'three'
 import vertexShader from './shaders/instancedCylinder.vert'
 import fragmentShader from './shaders/instancedCylinder.frag'
@@ -15,14 +15,18 @@ import { generateCylinder } from './utils/geometry'
 
 export function createThreeCylinder() {
   const geometry = new CylinderBufferGeometry(1, 1, 0.5, 16)
-  var material = new MeshBasicMaterial({ color: 0xffff00 })
+  var material = new MeshPhongMaterial({
+    color: 0xffff00,
+    specular: 0x333333,
+    shininess: 15,
+  })
   var cylinder = new Mesh(geometry, material)
   return cylinder
 }
 
 export function createInstancedCylinder() {
   const instances = 5
-  const torso = generateCylinder(0.5, 0.2)
+  const torso = generateCylinder(0.25, 0.125)
   // const vertices = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1]
   const { vertices, indices } = torso
   const geometry = new InstancedBufferGeometry()

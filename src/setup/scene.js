@@ -1,4 +1,10 @@
-import { Color, Scene, PerspectiveCamera, WebGLRenderer } from 'three'
+import {
+  Color,
+  DirectionalLight,
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+} from 'three'
 import { OrbitControls } from './orbitControl'
 import { AxesHelper } from './axesHelper'
 
@@ -12,6 +18,19 @@ export function createScene(
   scene.add(new AxesHelper())
   const renderer = new WebGLRenderer()
   const controls = new OrbitControls(camera, renderer.domElement)
+
+  // light
+  // const light = new DirectionalLight(0xffffff, 0.5)
+  // light.position.set(0, 0, 2)
+  // scene.add(light)
+  const top = new DirectionalLight(0xffffff, 0.5)
+  top.position.set(0, -1, 0)
+  scene.add(top)
+  const bottom = new DirectionalLight(0xffffff, 0.5)
+  bottom.position.set(0, 1, 0)
+  scene.add(bottom)
+  const cameraLight = new DirectionalLight(0xffffff, 0.7)
+  scene.add(cameraLight)
 
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.setSize(width, height)
@@ -40,11 +59,15 @@ export function createScene(
   function render() {
     onRender()
     controls.update()
+    cameraLight.position.copy(camera.position)
     renderer.render(scene, camera)
   }
   return {
     getCamera() {
       return camera
+    },
+    getLight() {
+      return top
     },
     render,
     onRender(cb) {
