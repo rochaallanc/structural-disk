@@ -10,12 +10,21 @@ import { AxesHelper } from './axesHelper'
 
 export function createScene(
   container,
-  { width = 400, height = 400 } = { width: 400, height: 400 }
+  { width = 400, height = 400, axesLength = 2 } = {
+    width: 400,
+    height: 400,
+    axesLength: 2,
+  }
 ) {
   const camera = new PerspectiveCamera(45, 1, 0.1, 50)
   camera.position.z = 2
   const scene = new Scene()
-  scene.add(new AxesHelper(2))
+
+  let axesHelper
+  if (axesLength > 0) {
+    axesHelper = new AxesHelper(axesLength)
+    scene.add(axesHelper)
+  }
   const renderer = new WebGLRenderer()
   const controls = new OrbitControls(camera, renderer.domElement)
 
@@ -68,6 +77,9 @@ export function createScene(
     },
     getLight() {
       return top
+    },
+    getAxisHelper() {
+      return axesHelper
     },
     render,
     onRender(cb) {
