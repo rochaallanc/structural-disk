@@ -59,6 +59,7 @@
     const dipMesh = new Line(dipGeom, new LineBasicMaterial({color: 0x000000}))
 
     meshContainer.add(mesh, dipMesh)
+    meshContainer.position.set(1, 1, 1)
     scene.add(meshContainer)
     rx = mesh.rotation.x
     ry = mesh.rotation.y
