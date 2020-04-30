@@ -18,6 +18,11 @@
     padding: 1rem;
   }
 
+  .container {
+    display: flex;
+    flex-direction: row;
+  }
+
   .minimal-card {
     display: inline-block;
     margin: 1rem 1rem;
@@ -33,17 +38,18 @@
   import {createThreeCylinder} from '../setup/instancedMesh';
   import {createScene} from '../setup/scene.js'
   var container;
-  let dip;
+  let dip = 45;
   onMount(() => {
     const scene = createScene(container, {width: 800, height: 800});
     const mesh = createThreeCylinder();
+    scene.getCamera().position.set(2, 2, 4)
     scene.add(mesh)
     scene.animate()
   });
 </script>
-<div bind:this={container}></div>
-<h3 class="text-center">Structural</h3>
-<div class="minimal-ui">
-  <input type="range" min="0" max="90" bind:value={dip} />
-  <pre>dip: {dip}</pre>
+<div class="container">
+  <div bind:this={container}></div>
+  <div class="minimal-ui">
+    <b>dip</b>: {dip} <input type="range" min="0" max="90" bind:value={dip} />
+  </div>
 </div>
