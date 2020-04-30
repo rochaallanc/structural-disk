@@ -15,7 +15,7 @@ export function createScene(
   const camera = new PerspectiveCamera(45, 1, 0.1, 50)
   camera.position.z = 2
   const scene = new Scene()
-  scene.add(new AxesHelper())
+  scene.add(new AxesHelper(2))
   const renderer = new WebGLRenderer()
   const controls = new OrbitControls(camera, renderer.domElement)
 

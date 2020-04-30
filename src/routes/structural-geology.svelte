@@ -14,8 +14,11 @@
   }
 
   .minimal-ui {
-    text-align: center;
+    text-align: left;
     padding: 1rem;
+  }
+  .ui-item {
+    padding: 0.5rem;
   }
 
   .container {
@@ -35,21 +38,55 @@
 </style>
 <script charset="utf-8">
   import {onMount} from 'svelte';
+  import {Mesh, BufferGeometry, LineBasicMaterial, BufferAttribute} from 'three';
   import {createThreeCylinder} from '../setup/instancedMesh';
   import {createScene} from '../setup/scene.js'
   var container;
   let dip = 45;
+  let rx = 0;
+  let ry = 0;
+  let rz = 0;
+  let mesh;
   onMount(() => {
     const scene = createScene(container, {width: 800, height: 800});
-    const mesh = createThreeCylinder();
+    mesh = createThreeCylinder();
     scene.getCamera().position.set(2, 2, 4)
+
+    // const dipGeom = new BufferGeometry()
+    // dipGeom.setAttribute( 'position', new BufferAttribute( new Float32Array([0, 5, 0, 0, 0, 5, 5, 5, 5]), 3 ) );
+    // const dipMesh = new Mesh(dipGeom, new LineBasicMaterial({color: 0x0000ff}))
+
     scene.add(mesh)
+    // scene.add(dipMesh)
+    rx = mesh.rotation.x
+    ry = mesh.rotation.y
+    rz = mesh.rotation.z
     scene.animate()
   });
+  $: {
+    // rz = rx
+  }
+  $: {
+    if (mesh) {
+      mesh.rotation.x = rx
+      mesh.rotation.y = ry
+      mesh.rotation.z = rz
+    }
+  }
 </script>
 <div class="container">
   <div bind:this={container}></div>
   <div class="minimal-ui">
-    <b>dip</b>: {dip} <input type="range" min="0" max="90" bind:value={dip} />
+    <div>
+      <!-- <div class="ui&#45;item"> -->
+      <!--   <b>x</b><input type="range" min="&#45;1.57" max="1.57" step="0.1" bind:value={rx} />{rx}<br> -->
+      <!-- </div> -->
+      <div class="ui-item">
+        <b>Dip Direction</b><input type="range" min="-1.57" max="1.57" step="0.1" bind:value={ry} />{ry}<br>
+      </div>
+      <div class="ui-item">
+        <b>Dip</b><input type="range" min="-1.57" max="1.57" step="0.1" bind:value={rz} />{rz}<br>
+      </div>
+    </div>
   </div>
 </div>

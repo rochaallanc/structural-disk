@@ -26,7 +26,7 @@ export function createThreeCylinder() {
 
 export function createInstancedCylinder() {
   const instances = 5
-  const torso = generateCylinder(0.25, 0.125)
+  const torso = generateCylinder(0.1, 0.05)
   // const vertices = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1]
   const { vertices, indices } = torso
   const geometry = new InstancedBufferGeometry()
