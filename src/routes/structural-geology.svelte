@@ -38,7 +38,7 @@
 </style>
 <script charset="utf-8">
   import {onMount} from 'svelte';
-  import {Mesh, BufferGeometry, LineBasicMaterial, BufferAttribute} from 'three';
+  import {Line, Object3D, BufferGeometry, LineBasicMaterial, BufferAttribute} from 'three';
   import {createThreeCylinder} from '../setup/instancedMesh';
   import {createScene} from '../setup/scene.js'
   var container;
@@ -47,17 +47,19 @@
   let ry = 0;
   let rz = 0;
   let mesh;
+  let meshContainer;
   onMount(() => {
     const scene = createScene(container, {width: 800, height: 800});
     mesh = createThreeCylinder();
     scene.getCamera().position.set(2, 2, 4)
 
-    // const dipGeom = new BufferGeometry()
-    // dipGeom.setAttribute( 'position', new BufferAttribute( new Float32Array([0, 5, 0, 0, 0, 5, 5, 5, 5]), 3 ) );
-    // const dipMesh = new Mesh(dipGeom, new LineBasicMaterial({color: 0x0000ff}))
+    meshContainer = new Object3D()
+    const dipGeom = new BufferGeometry()
+    dipGeom.setAttribute('position', new BufferAttribute(new Float32Array([0, 0.26, 0, 0, 0.26, 1]), 3));
+    const dipMesh = new Line(dipGeom, new LineBasicMaterial({color: 0x000000}))
 
-    scene.add(mesh)
-    // scene.add(dipMesh)
+    meshContainer.add(mesh, dipMesh)
+    scene.add(meshContainer)
     rx = mesh.rotation.x
     ry = mesh.rotation.y
     rz = mesh.rotation.z
@@ -67,10 +69,10 @@
     // rz = rx
   }
   $: {
-    if (mesh) {
-      mesh.rotation.x = rx
-      mesh.rotation.y = ry * Math.PI/180
-      mesh.rotation.z = rz * Math.PI/180
+    if (meshContainer) {
+      meshContainer.rotation.x = rx
+      meshContainer.rotation.y = ry * Math.PI/180
+      meshContainer.rotation.z = rz * Math.PI/180
     }
   }
 </script>
