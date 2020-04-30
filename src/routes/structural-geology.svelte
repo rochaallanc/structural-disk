@@ -69,8 +69,8 @@
   $: {
     if (mesh) {
       mesh.rotation.x = rx
-      mesh.rotation.y = ry
-      mesh.rotation.z = rz
+      mesh.rotation.y = ry * Math.PI/180
+      mesh.rotation.z = rz * Math.PI/180
     }
   }
 </script>
@@ -82,10 +82,10 @@
       <!--   <b>x</b><input type="range" min="&#45;1.57" max="1.57" step="0.1" bind:value={rx} />{rx}<br> -->
       <!-- </div> -->
       <div class="ui-item">
-        <b>Dip Direction</b><input type="range" min="-1.57" max="1.57" step="0.1" bind:value={ry} />{ry}<br>
+        <b>Dip Direction</b><input type="range" min="0" max="360" step="10" bind:value={ry} />{ry}<br>
       </div>
       <div class="ui-item">
-        <b>Dip</b><input type="range" min="-1.57" max="1.57" step="0.1" bind:value={rz} />{rz}<br>
+        <b>Dip</b><input type="range" min="0" max="90" step="5" bind:value={rz} />{rz}<br>
       </div>
     </div>
   </div>
