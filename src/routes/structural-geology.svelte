@@ -1,22 +1,4 @@
 <style type="text/css" media="screen">
-  .text-center {
-    text-align: center;
-  }
-
-  .minimals {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  pre {
-    margin: 0;
-  }
-
-  .minimal-ui {
-    text-align: left;
-    padding: 1rem;
-  }
   .ui-item {
     padding: 0.5rem;
   }
@@ -25,36 +7,35 @@
     display: flex;
     flex-direction: row;
   }
-
-  .minimal-card {
-    display: inline-block;
-    margin: 1rem 1rem;
-    width: 450px;
-  }
-
-  h3 {
-    margin: 0.25rem 0.25rem;
-  }
 </style>
 <script charset="utf-8">
   import {onMount} from 'svelte';
+  import Toggle from '../components/Toggle.svelte';
   import {Line, Color, MeshBasicMaterial,TextGeometry, Mesh, Object3D, BufferGeometry, LineBasicMaterial, BufferAttribute} from 'three';
   import {createThreeCylinder} from '../setup/instancedMesh';
   import {createScene} from '../setup/scene.js'
   import {createText} from '../setup/text.js'
+
   var container;
+  let toggleOn = true;
+  let polarity = toggleOn ? 1 : -1;
+  $: {
+    polarity = toggleOn ? 1 : -1;
+  }
   let rx = 0;
   let ry = 30;
   let rz = 45;
   let mesh;
   let meshContainer;
   let text;
+
   onMount(async () => {
     const axesLength = 2;
     const scene = createScene(container, {width: 800, height: 800, axesLength: 0});
     mesh = createThreeCylinder();
     const camera = scene.getCamera()
-    camera.position.set(0, 8, 0)
+    window.camera = camera
+    camera.position.set(-6, 4, -3)
 
     meshContainer = new Object3D()
     const dipGeom = new BufferGeometry()
@@ -76,7 +57,6 @@
       E.rotation.copy(camera.rotation)
       W.rotation.copy(camera.rotation)
     })
-
     meshContainer.add(mesh, dipMesh)
     meshContainer.position.set(0, 0, 0)
     scene.add(meshContainer)
@@ -86,9 +66,10 @@
     if (meshContainer) {
       meshContainer.rotation.x = rx
       meshContainer.rotation.y = -ry * Math.PI/180
-      meshContainer.rotation.z = rz * Math.PI/180
+      meshContainer.rotation.z = ((polarity === 1 ? 0 : 180) +rz) * Math.PI/180
     }
   }
+
 </script>
 <div class="container">
   <div bind:this={container}></div>
@@ -103,6 +84,7 @@
       <div class="ui-item">
         <b>Dip</b><input type="range" min="0" max="90" step="5" bind:value={rz} />{rz}<br>
       </div>
+      <div class="ui-item"><b>Plarity</b>: <Toggle bind:toggle={toggleOn}/> {polarity}</div>
     </div>
   </div>
 </div>
