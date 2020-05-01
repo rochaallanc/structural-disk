@@ -214,8 +214,8 @@
       <div class="ui-item">
         <span class="attribute">Dip</span><input type="range" min="0" max="90" step="5" bind:value={rz} />{rz}<br>
       </div>
-      <div class="ui-item"><span class="attribute" style="margin-right: 1em;">Plarity</span>
-        <Toggle bind:toggle={toggleOn} /> {polarity}</div>
+      <div class="ui-item"><span class="attribute" style="margin-right: 1em;">Polarity</span>
+        <Toggle bind:toggle={toggleOn} /><span style="margin-left: 1rem;">{polarity}</span></div>
     </div>
   </div>
 </div>
