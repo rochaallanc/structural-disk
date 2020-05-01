@@ -11,16 +11,25 @@
 <script charset="utf-8">
   import {onMount} from 'svelte';
   import Toggle from '../components/Toggle.svelte';
-  import {Line, Color, MeshBasicMaterial,TextGeometry, Mesh, Object3D, BufferGeometry, LineBasicMaterial, BufferAttribute} from 'three';
-  import {createThreeCylinder} from '../setup/instancedMesh';
+  import {Float32BufferAttribute, Line, Color, MeshBasicMaterial,TextGeometry, Mesh, Object3D, BufferGeometry, LineBasicMaterial, BufferAttribute} from 'three';
+  import {createThreeCylinder, createInstancedCylinder} from '../setup/instancedMesh';
   import {createScene} from '../setup/scene.js'
   import {createText} from '../setup/text.js'
 
   var container;
   let toggleOn = true;
   let polarity = toggleOn ? 1 : -1;
+  var i, l;
   $: {
     polarity = toggleOn ? 1 : -1;
+    if (mesh) {
+      const colorArray = mesh.geometry.getAttribute('color').array
+      for (i = 0, l = colorArray.length; i < l; i++) {
+        colorArray[i] = 1 - colorArray[i]
+      }
+      mesh.geometry.attributes.color.needsUpate = true
+      console.log(mesh.geometry.attributes);
+    }
   }
   let rx = 0;
   let ry = 30;
@@ -32,7 +41,7 @@
   onMount(async () => {
     const axesLength = 2;
     const scene = createScene(container, {width: 800, height: 800, axesLength: 0});
-    mesh = createThreeCylinder();
+    mesh = createInstancedCylinder();
     const camera = scene.getCamera()
     window.camera = camera
     camera.position.set(-6, 4, -3)
@@ -66,7 +75,7 @@
     if (meshContainer) {
       meshContainer.rotation.x = rx
       meshContainer.rotation.y = -ry * Math.PI/180
-      meshContainer.rotation.z = ((polarity === 1 ? 0 : 180) +rz) * Math.PI/180
+      meshContainer.rotation.z = rz * Math.PI/180
     }
   }
 

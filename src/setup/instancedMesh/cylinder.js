@@ -6,7 +6,6 @@ import {
   DoubleSide,
   RawShaderMaterial,
   InstancedBufferAttribute,
-  Vector4,
   MeshPhongMaterial,
 } from 'three'
 import vertexShader from './shaders/instancedCylinder.vert'
@@ -25,52 +24,41 @@ export function createThreeCylinder() {
 }
 
 export function createInstancedCylinder() {
-  const instances = 5
-  const torso = generateCylinder(0.1, 0.05)
+  const instances = 1
+  const torso = generateCylinder(1, 0.5)
   // const vertices = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1]
-  const { vertices, indices } = torso
+  const { vertices, indices, colors } = torso
   const geometry = new InstancedBufferGeometry()
   geometry.maxInstancedCount = instances // set so its initalized for dat.GUI, will be set in first draw otherwise
   geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3))
   geometry.setIndex(indices)
-  geometry.setAttribute(
-    'color',
-    new Float32BufferAttribute(vertices.map(_v => Math.random()), 3)
-  )
-  var vector = new Vector4()
-  var offsets = []
-  var orientationsStart = []
-  var orientationsEnd = []
-  for (var i = 0; i < instances; i++) {
-    offsets.push(Math.random(), Math.random(), Math.random())
-    vector.set(
-      Math.random() * 2 - 1,
-      Math.random() * 2 - 1,
-      Math.random() * 2 - 1,
-      Math.random() * 2 - 1
-    )
-    vector.normalize()
-    orientationsStart.push(vector.x, vector.y, vector.z, vector.w)
-    vector.set(
-      Math.random() * 2 - 1,
-      Math.random() * 2 - 1,
-      Math.random() * 2 - 1,
-      Math.random() * 2 - 1
-    )
-    vector.normalize()
-    orientationsEnd.push(vector.x, vector.y, vector.z, vector.w)
-  }
+  geometry.setAttribute('color', new Float32BufferAttribute(colors, 3))
+  // var vector = new Vector4()
+  var offsets = [0, 0, 0]
+  // var orientationsStart = []
+  // var orientationsEnd = []
+  // for (var i = 0; i < instances; i++) {
+  //   offsets.push(Math.random(), Math.random(), Math.random())
+  //   vector.set(
+  //     Math.random() * 2 - 1,
+  //     Math.random() * 2 - 1,
+  //     Math.random() * 2 - 1,
+  //     Math.random() * 2 - 1
+  //   )
+  //   vector.normalize()
+  //   orientationsStart.push(vector.x, vector.y, vector.z, vector.w)
+  //   vector.set(
+  //     Math.random() * 2 - 1,
+  //     Math.random() * 2 - 1,
+  //     Math.random() * 2 - 1,
+  //     Math.random() * 2 - 1
+  //   )
+  //   vector.normalize()
+  //   orientationsEnd.push(vector.x, vector.y, vector.z, vector.w)
+  // }
   geometry.setAttribute(
     'offset',
     new InstancedBufferAttribute(new Float32Array(offsets), 3)
-  )
-  geometry.setAttribute(
-    'orientationEnd',
-    new InstancedBufferAttribute(new Float32Array(orientationsEnd), 4)
-  )
-  geometry.setAttribute(
-    'orientationStart',
-    new InstancedBufferAttribute(new Float32Array(orientationsStart), 4)
   )
 
   const material = new RawShaderMaterial({

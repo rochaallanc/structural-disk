@@ -8,8 +8,6 @@ uniform mat4 projectionMatrix;
 attribute vec3 position;
 attribute vec3 offset;
 attribute vec4 color;
-attribute vec4 orientationStart;
-attribute vec4 orientationEnd;
 
 varying vec3 vPosition;
 varying vec4 vColor;
