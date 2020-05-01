@@ -48,7 +48,12 @@
     meshContainer = new Object3D()
 
     const dipGeom = new BufferGeometry()
-    dipGeom.setAttribute('position', new BufferAttribute(new Float32Array([0, 0.26, 0, -1, 0.26, 0]), 3));
+    dipGeom.setAttribute('position', new BufferAttribute(new Float32Array([
+      0, 0.26, 0,
+      -1, 0.26, 0,
+      -1, -0.26, 0,
+      0, -0.26, 0
+    ]), 3));
     const dipMesh = new Line(dipGeom, new LineBasicMaterial({color: 0x000000}))
 
     // text
