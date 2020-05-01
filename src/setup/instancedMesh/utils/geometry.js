@@ -56,7 +56,6 @@ export function generateCylinder(radius, height) {
       // now save vertices of the row in our index array
       indexArray.push(indexRow)
     }
-    console.log('indexArray', indexArray)
     // generate indices
     for (x = 0; x < radialSegments; x++) {
       for (y = 0; y < heightSegments; y++) {
