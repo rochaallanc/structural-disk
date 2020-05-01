@@ -27,8 +27,7 @@
       for (i = 0, l = colorArray.length; i < l; i++) {
         colorArray[i] = 1 - colorArray[i]
       }
-      mesh.geometry.attributes.color.needsUpate = true
-      console.log(mesh.geometry.attributes);
+      mesh.geometry.attributes.color.needsUpdate = true
     }
   }
   let rx = 0;
@@ -47,6 +46,7 @@
     camera.position.set(-6, 4, -3)
 
     meshContainer = new Object3D()
+
     const dipGeom = new BufferGeometry()
     dipGeom.setAttribute('position', new BufferAttribute(new Float32Array([0, 0.26, 0, -1, 0.26, 0]), 3));
     const dipMesh = new Line(dipGeom, new LineBasicMaterial({color: 0x000000}))
@@ -94,6 +94,11 @@
         <b>Dip</b><input type="range" min="0" max="90" step="5" bind:value={rz} />{rz}<br>
       </div>
       <div class="ui-item"><b>Plarity</b>: <Toggle bind:toggle={toggleOn}/> {polarity}</div>
+      <div class="notes">
+        <ul>
+          <li>Dip lines can exist on the bottom of the disks ?</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

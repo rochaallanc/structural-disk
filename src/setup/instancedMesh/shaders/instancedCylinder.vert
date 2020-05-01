@@ -7,10 +7,10 @@ uniform mat4 projectionMatrix;
 
 attribute vec3 position;
 attribute vec3 offset;
-attribute vec4 color;
+attribute vec3 color;
 
 varying vec3 vPosition;
-varying vec4 vColor;
+varying vec3 vColor;
 
 void main(){
   /* vPosition = offset * max( abs( sineTime * 2.0 + 1.0 ), 0.5 ) + position; */
