@@ -1,11 +1,11 @@
 import { Vector3, Vector2 } from 'three'
 
-const heightSegments = 2
+const heightSegments = 1
 const radialSegments = 16
 const thetaLength = Math.PI * 2
 const thetaStart = 0.0
 
-const [r1, g1, b1] = [(255 - 33) / 255, (255 - 150) / 255, (255 - 243) / 255]
+const [r1, g1, b1] = [33 / 255, 150 / 255, 243 / 255]
 export function generateCylinder(radius, height) {
   const indices = []
   const vertices = []
@@ -17,7 +17,7 @@ export function generateCylinder(radius, height) {
   const halfHeight = height / 2
   const uvs = []
 
-  function generateTorso(radius, height) {
+  function generateTorso() {
     var x, y
     var normal = new Vector3()
     var vertex = new Vector3()
@@ -56,7 +56,7 @@ export function generateCylinder(radius, height) {
       // now save vertices of the row in our index array
       indexArray.push(indexRow)
     }
-    console.log('indexArray', indexArray);
+    console.log('indexArray', indexArray)
     // generate indices
     for (x = 0; x < radialSegments; x++) {
       for (y = 0; y < heightSegments; y++) {

@@ -23,9 +23,12 @@ export function createThreeCylinder() {
   return cylinder
 }
 
-export function createInstancedCylinder() {
-  const instances = 1
-  const torso = generateCylinder(1, 0.5)
+export function createInstancedCylinder(
+  instances = 1,
+  radius = 1,
+  height = 0.5
+) {
+  const torso = generateCylinder(radius, height)
   // const vertices = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1]
   const { vertices, indices, colors } = torso
   const geometry = new InstancedBufferGeometry()
@@ -37,25 +40,9 @@ export function createInstancedCylinder() {
   var offsets = [0, 0, 0]
   // var orientationsStart = []
   // var orientationsEnd = []
-  // for (var i = 0; i < instances; i++) {
-  //   offsets.push(Math.random(), Math.random(), Math.random())
-  //   vector.set(
-  //     Math.random() * 2 - 1,
-  //     Math.random() * 2 - 1,
-  //     Math.random() * 2 - 1,
-  //     Math.random() * 2 - 1
-  //   )
-  //   vector.normalize()
-  //   orientationsStart.push(vector.x, vector.y, vector.z, vector.w)
-  //   vector.set(
-  //     Math.random() * 2 - 1,
-  //     Math.random() * 2 - 1,
-  //     Math.random() * 2 - 1,
-  //     Math.random() * 2 - 1
-  //   )
-  //   vector.normalize()
-  //   orientationsEnd.push(vector.x, vector.y, vector.z, vector.w)
-  // }
+  for (var i = 0; i < instances; i++) {
+    offsets.push(Math.random(), Math.random(), Math.random())
+  }
   geometry.setAttribute(
     'offset',
     new InstancedBufferAttribute(new Float32Array(offsets), 3)

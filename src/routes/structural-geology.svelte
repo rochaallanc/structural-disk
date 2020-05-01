@@ -12,7 +12,7 @@
   import {onMount} from 'svelte';
   import Toggle from '../components/Toggle.svelte';
   import {Float32BufferAttribute, Line, Color, MeshBasicMaterial,TextGeometry, Mesh, Object3D, BufferGeometry, LineBasicMaterial, BufferAttribute} from 'three';
-  import {createThreeCylinder, createInstancedCylinder} from '../setup/instancedMesh';
+  import {createInstancedCylinder} from '../setup/instancedMesh';
   import {createScene} from '../setup/scene.js'
   import {createText} from '../setup/text.js'
 
@@ -20,15 +20,17 @@
   let toggleOn = true;
   let polarity = toggleOn ? 1 : -1;
   var i, l;
+  let count = 0;
   $: {
     polarity = toggleOn ? 1 : -1;
-    if (mesh) {
+    if (mesh && count > 1) {
       const colorArray = mesh.geometry.getAttribute('color').array
       for (i = 0, l = colorArray.length; i < l; i++) {
         colorArray[i] = 1 - colorArray[i]
       }
       mesh.geometry.attributes.color.needsUpdate = true
     }
+    count ++
   }
   let rx = 0;
   let ry = 30;

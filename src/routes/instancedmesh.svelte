@@ -58,7 +58,7 @@
     // instanced cylinder
     const instancedCylinderScene = createScene(instancedCylinderContainer);
     instancedCylinderScene.getCamera().position.fromArray([2, 2, 2])
-    const instancedCylinderMesh = createInstancedCylinder();
+    const instancedCylinderMesh = createInstancedCylinder(10, 0.25, 0.1);
     instancedCylinderScene.add(instancedCylinderMesh)
     instancedCylinderScene.onRender(() => {
       var time = performance.now()
