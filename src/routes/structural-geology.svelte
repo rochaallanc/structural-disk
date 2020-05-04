@@ -198,9 +198,10 @@
       // meshContainer.rotation.y = -ry * Math.PI / 180
       dipMesh.rotation.z = rz * Math.PI / 180
       dipMesh.rotation.y = ry * Math.PI / 180
-      mesh.material.uniforms.dip.value  = rz * Math.PI / 180;
-      mesh.material.uniforms.dipDirection.value  = ry * Math.PI / 180;
-      console.log();
+      mesh.geometry.getAttribute('dip').array[0]  = rz * Math.PI / 180;
+      mesh.geometry.getAttribute('dipDirection').array[0]  =ry * Math.PI / 180;
+      mesh.geometry.attributes.dip.needsUpdate = true;
+      mesh.geometry.attributes.dipDirection.needsUpdate = true;
     }
   }
 

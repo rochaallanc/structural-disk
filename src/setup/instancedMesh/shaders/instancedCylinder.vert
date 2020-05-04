@@ -2,12 +2,12 @@ precision highp float;
 
 uniform float sineTime;
 
-uniform float dip;
-uniform float dipDirection;
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
 
 attribute vec3 position;
+attribute float dipDirection;
+attribute float dip;
 attribute vec3 offset;
 attribute vec3 color;
 

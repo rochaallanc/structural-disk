@@ -36,13 +36,23 @@ export function createInstancedCylinder(
   geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3))
   geometry.setIndex(indices)
   geometry.setAttribute('color', new Float32BufferAttribute(colors, 3))
-  // var vector = new Vector4()
   var offsets = [0, 0, 0]
-  // var orientationsStart = []
-  // var orientationsEnd = []
-  for (var i = 0; i < instances; i++) {
+  const dips = [0]
+  const dipDirections = [0]
+  for (var i = 1; i < instances; i++) {
     offsets.push(Math.random(), Math.random(), Math.random())
+    dips.push((90 * Math.random() * Math.PI) / 180)
+    dipDirections.push((90 * Math.random() * Math.PI) / 180)
   }
+  geometry.setAttribute(
+    'dipDirection',
+    new InstancedBufferAttribute(new Float32Array(dipDirections), 1)
+  )
+  geometry.setAttribute(
+    'dip',
+    new InstancedBufferAttribute(new Float32Array(dips), 1)
+  )
+  console.log(dipDirections, dips)
   geometry.setAttribute(
     'offset',
     new InstancedBufferAttribute(new Float32Array(offsets), 3)
@@ -50,8 +60,6 @@ export function createInstancedCylinder(
 
   const material = new RawShaderMaterial({
     uniforms: {
-      dipDirection: { value: 0.0 },
-      dip: { value: 0.0 },
       time: { value: 1.0 },
       sineTime: { value: 1.0 },
     },
