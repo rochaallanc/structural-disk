@@ -50,6 +50,8 @@ export function createInstancedCylinder(
 
   const material = new RawShaderMaterial({
     uniforms: {
+      dipDirection: { value: 0.0 },
+      dip: { value: 0.0 },
       time: { value: 1.0 },
       sineTime: { value: 1.0 },
     },

@@ -151,6 +151,7 @@
   let mesh;
   let meshContainer;
   let text;
+  let dipMesh ;
 
   onMount(async () => {
     const axesLength = 2;
@@ -169,7 +170,7 @@
       -1.01, -0.26, 0,
       0, -0.26, 0
     ]), 3));
-    const dipMesh = new Line(dipGeom, new LineBasicMaterial({color: 0x000000}))
+    dipMesh = new Line(dipGeom, new LineBasicMaterial({color: 0x000000}))
 
     // text
     const N = await createText({position: [-axesLength * 1.1, 0, 0], text: 'N'})
@@ -193,9 +194,13 @@
   });
   $: {
     if (meshContainer) {
-      meshContainer.rotation.x = rx
-      meshContainer.rotation.y = -ry * Math.PI / 180
-      meshContainer.rotation.z = rz * Math.PI / 180
+      // meshContainer.rotation.x = rx
+      // meshContainer.rotation.y = -ry * Math.PI / 180
+      dipMesh.rotation.z = rz * Math.PI / 180
+      dipMesh.rotation.y = ry * Math.PI / 180
+      mesh.material.uniforms.dip.value  = rz * Math.PI / 180;
+      mesh.material.uniforms.dipDirection.value  = ry * Math.PI / 180;
+      console.log();
     }
   }
 
