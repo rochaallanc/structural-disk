@@ -121,6 +121,10 @@
   }
 </style>
 
+<svelte:head>
+  <title>Structural Disks</title>
+</svelte:head>
+
 <script charset="utf-8">
   import {onMount} from 'svelte';
   import Toggle from '../components/Toggle.svelte';
