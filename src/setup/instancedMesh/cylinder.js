@@ -30,12 +30,18 @@ export function createInstancedCylinder(
 ) {
   const torso = generateCylinder(radius, height)
   // const vertices = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1]
-  const { vertices, indices, colors } = torso
+  const { vertices, indices, colors, normals } = torso;
   const geometry = new InstancedBufferGeometry()
+  
+  //Element geometry
   geometry.maxInstancedCount = instances // set so its initalized for dat.GUI, will be set in first draw otherwise
   geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3))
   geometry.setIndex(indices)
   geometry.setAttribute('color', new Float32BufferAttribute(colors, 3))
+  geometry.setAttribute('normal', new Float32BufferAttribute(normals, 3))
+
+
+  //Instanced positions
   var offsets = [0, 0, 0]
   const dips = [0]
   const dipDirections = [0]
@@ -44,6 +50,8 @@ export function createInstancedCylinder(
     dips.push((90 * Math.random() * Math.PI) / 180)
     dipDirections.push((90 * Math.random() * Math.PI) / 180)
   }
+
+
   geometry.setAttribute(
     'dipDirection',
     new InstancedBufferAttribute(new Float32Array(dipDirections), 1)
