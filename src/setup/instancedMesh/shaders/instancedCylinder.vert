@@ -51,9 +51,13 @@ mat4 rotationFixingUp(float gama, float beta){
 void main(){
   /* vPosition = offset * max( abs( sineTime * 2.0 + 1.0 ), 0.5 ) + position; */
  mat3 rotatedMatrix = mat3(rotationFixingUp(-dip, dipDirection));
-  vPosition = position;
 
-  vEyeDir = normalize(rotatedMatrix * position);
+  vec3 pos = position;
+  // pos.y *= 0.5;
+
+  vPosition = pos;
+
+  vEyeDir = normalize(rotatedMatrix * pos);
 
   vNormal = normalize(rotatedMatrix * normal);
   // mat3 rotatedMatrix = mat3(rotate(normalize(vec3( 0, 0, 1 )), -dip));
@@ -65,5 +69,5 @@ void main(){
   /*    vPosition.x * dip + vPosition.y * 0, */
   /*    vPosition.y * dip - vPosition.x * 0); */
   vColor = color;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4( offset + rotatedMatrix * position, 1.0 );
+  gl_Position = projectionMatrix * modelViewMatrix * vec4( offset + rotatedMatrix * pos, 1.0 );
 }

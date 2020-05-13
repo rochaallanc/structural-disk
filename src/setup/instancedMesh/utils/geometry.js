@@ -6,6 +6,8 @@ const thetaLength = Math.PI * 2
 const thetaStart = 0.0
 
 const [r1, g1, b1] = [33 / 255, 150 / 255, 243 / 255]
+const blue  = [0.34, 0.64, 0.90];
+const red = [0.95, 0.36, 0.35];
 export function generateCylinder(radius, height) {
   const indices = []
   const vertices = []
@@ -41,9 +43,9 @@ export function generateCylinder(radius, height) {
         vertex.z = r * cosTheta
         vertices.push(vertex.x, vertex.y, vertex.z)
         if (y === 0) {
-          colors.push(r1, g1, b1)
+          colors.push(blue[0], blue[1], blue[2])
         } else {
-          colors.push(1 - r1, 1 - g1, 1 - b1)
+          colors.push(red[0], red[1], red[2])
         }
         // normal
         normal.set(sinTheta, slope, cosTheta).normalize()
@@ -83,7 +85,7 @@ export function generateCylinder(radius, height) {
     // first we generate the center vertex data of the cap.
     // because the geometry needs one set of uvs per face,
     // we must generate a center vertex per face/segment
-    const [r, g, b] = top ? [r1, g1, b1] : [1 - r1, 1 - g1, 1 - b1]
+    const [r, g, b] = top ? blue: red; 
 
     for (x = 1; x <= radialSegments; x++) {
       // vertex
