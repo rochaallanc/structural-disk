@@ -138,12 +138,24 @@
   let polarity = toggleOn ? 1 : -1;
   var i, l;
   let count = 0;
+  const blue  = [0.34, 0.64, 0.90];
+  const red = [0.95, 0.36, 0.35];
   $: {
     polarity = toggleOn ? 1 : -1;
     if (mesh && count > 1) {
       const colorArray = mesh.geometry.getAttribute('color').array
-      for (i = 0, l = colorArray.length; i < l; i++) {
-        colorArray[i] = 1 - colorArray[i]
+      for (i = 0, l = colorArray.length; i < l; i+=3) {
+             
+        if( Math.abs(colorArray[i] - blue[0]) < 0.01){
+          colorArray[i] = red[0];
+          colorArray[i+1] = red[1];
+          colorArray[i+2] = red[2];
+        }else{
+          colorArray[i] = blue[0];
+          colorArray[i+1] = blue[1];
+          colorArray[i+2] = blue[2];
+        }        
+        //colorArray[i] = 1 - colorArray[i]
       }
       mesh.geometry.attributes.color.needsUpdate = true
     }
